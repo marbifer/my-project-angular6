@@ -1,0 +1,33 @@
+<h4 class="pb-1 mt-5 text-center">Login de usuario</h4>
+
+<div class="col-lg-5 col-md-5 shadow px-5 py-5 white rounded wrapper form-contact">
+  <form>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="email">Usuario (email)</label>
+          <input type="email" class="form-control" id="emailLog" aria-describedby="emailHelp" placeholder="">
+        </div>
+      </div>
+
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="pass">Contraseña</label>
+          <input type="password" class="form-control" id="passLog" placeholder="">
+        </div>
+      </div>
+
+      <div class="col-md-12 mt-3">
+        <!-- input type="checkbox" class="form-check-input" id="exampleCheck1"> -->
+        <a>Olvidé mi contraseña</a>
+        <button type="submit" class="btn btn-lg btn-block btn-warning butt-contact mt-5">Ingresar</button>
+      </div>
+
+    </div><!-- /.row -->
+  </form>
+</div><!-- /.col-lg-5 -->
+
+
+<a class="nav-link text-muted text-center mt-4" [routerLink]="['../registro']">
+  <h4>Soy nuevo, quiero registrarme</h4>
+</a>

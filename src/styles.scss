@@ -1,0 +1,44 @@
+/* You can add global styles to this file, and also import other style files */
+.wrapper {
+    border-top: 8px solid #f1b90d;
+}
+
+.form-contact {
+    float: none;
+    margin: 0 auto;
+}
+
+.butt-contact {
+    color: #ffffff;
+}
+
+.register {
+    margin-top: 8px !important;
+}
+.my-nav {
+    background: #f1b90d !important;
+}
+
+.my-footer {
+    color: #ffffff;
+}
+
+/* .footer {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+} */
+
+.text-footer {
+    font-size: 12px;
+}
+
+.validation {
+    font-size: 12px;
+}
+
+.required:after {
+    content: "*"; 
+    color: red;
+  }
