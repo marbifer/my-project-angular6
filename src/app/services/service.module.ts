@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ServicesReferencesService } from './service.index';
+import { ReferencesService } from './service.index';
 
 @NgModule({
   imports: [
     CommonModule
   ],
   providers: [
-    ServicesReferencesService
+    ReferencesService
   ],
   declarations: []
 })

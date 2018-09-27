@@ -1,5 +1,5 @@
 export interface References {
-    select: [''];
+    select: string[];
     codes: {
         code2: number;
         code3: string;

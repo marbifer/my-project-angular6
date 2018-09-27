@@ -5,10 +5,9 @@
         <div class="row center-block">
             <div class="col-md-4">
                 <select class="form-control">
-                    <option>RT</option>
-                    <option>UY</option>
-                    <option>SD</option>
-                    <option>MK</option>
+                    <option *ngFor='let ref of referencesCode?.select; let i = index'>
+                        <div>{{ ref }}</div>
+                    </option>
                 </select>
                 <button type="button" class="btn btn-warning btn-lg butt-contact mt-3 px-5">Buscar</button>
             </div>

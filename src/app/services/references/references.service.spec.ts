@@ -1,15 +1,15 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { ServicesReferencesService } from './services-references.service';
+import { ReferencesService } from './references.service';
 
-describe('ServicesReferencesService', () => {
+describe('ReferencesService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [ServicesReferencesService]
+      providers: [ReferencesService]
     });
   });
 
-  it('should be created', inject([ServicesReferencesService], (service: ServicesReferencesService) => {
+  it('should be created', inject([ReferencesService], (service: ReferencesService) => {
     expect(service).toBeTruthy();
   }));
 });

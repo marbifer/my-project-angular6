@@ -1,4 +1,4 @@
-export { ServicesReferencesService } from './references/references.service';
+export { ReferencesService } from './references/references.service';
 /* export { TamaniosService } from './familias/tamanios/tamanios.service';
 export { SectionOneService } from './familias/section-one/section-one.service';
 export { IngredientesExtraService } from './familias/ingredientes-extra/ingredientes-extra.service';

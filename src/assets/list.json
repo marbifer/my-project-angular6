@@ -1,0 +1,30 @@
+{ 
+
+  "payments":  [
+        {
+            "codePackage": 102,
+            "date": "22/11/2018",
+            "import": 150,
+            "bill": "PDF"
+        },
+        {
+            "codePackage": 345,
+            "date": "23/11/2018",
+            "import": 250,
+            "bill": "PDF"
+        },
+        {
+            "codePackage": 678,
+            "date": "24/11/2018",
+            "import": 380,
+            "bill": "PDF"
+        },
+        {
+            "codePackage": 910,
+            "date": "25/11/2018",
+            "import": 1500,
+            "bill": "PDF"
+        }
+    ]
+
+}
