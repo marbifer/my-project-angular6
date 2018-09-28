@@ -1,3 +1,10 @@
 export interface List {
-    payments: [{}];
+    payments: Array<Row>;
+}
+
+export interface Row {
+    codePackage: number;
+    date: string;
+    import: number;
+    bill: string;
 }

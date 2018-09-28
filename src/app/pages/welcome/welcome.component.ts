@@ -11,25 +11,21 @@ import { Subscription } from 'rxjs';
 })
 export class WelcomeComponent implements OnInit, OnDestroy {
 
-  referencesCode: References[];
+  referencesCode: References;
   errorMessage: string;
-  selectedItem: References | null;
   sub: Subscription;
 
   constructor(public _referencesService: ReferencesService) { }
 
   ngOnInit() {
-    this.sub = this._referencesService.selectedItemChanges$.subscribe(
-      selectedItem => this.selectedItem = selectedItem
+    this.sub = this._referencesService.selectItemsChanges$.subscribe(
+      selectItems => {
+        console.log('testtttt', selectItems);
+        this.referencesCode = selectItems;
+      }
     );
 
-    this._referencesService.getReferences().subscribe(
-      (references: References[]) => {
-        this.referencesCode = references;
-        console.log('references', references);
-      },
-      (error: any) => this.errorMessage = <any>error
-    );
+    this._referencesService.getReferences();
   }
 
   ngOnDestroy(): void {
