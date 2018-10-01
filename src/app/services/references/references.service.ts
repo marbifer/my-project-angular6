@@ -19,11 +19,7 @@ export class ReferencesService {
 
   constructor(private http: HttpClient) { }
 
-  storeOnSubject(selectItems: References | null) {
-    this.selectItemsSource.next(selectItems);
-  }
-
-  getReferences() {
+  public getReferences(): void {
     /* if (this.references) {
       return of(this.references);
     } */
@@ -32,7 +28,7 @@ export class ReferencesService {
       .subscribe(
         data => {
           console.log('request', JSON.stringify(data));
-          this.storeOnSubject(data);
+          this.selectItemsSource.next(data);
         },
         catchError(this.handleError)
       );
@@ -49,7 +45,7 @@ export class ReferencesService {
       select: [''],
       codes: {
         code2: 102,
-        code3: 'AR'
+        code3: [''],
       }
     };
   }

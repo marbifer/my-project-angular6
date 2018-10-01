@@ -7,8 +7,12 @@
         "UX"
     ],    
    "codes": {
-        "code2": 123456789,
-        "code3": "AR"
+        "code2": null,
+        "code3": [
+            "ARS",
+            "EUR",
+            "UDS"
+        ]
     }
 
 }

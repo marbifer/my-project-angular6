@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app.routes';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { MyFormComponent } from './my-form/my-form.component';
@@ -29,6 +30,8 @@ import { RegisterComponent } from './pages/register/register.component';
     RegisterComponent
   ],
   imports: [
+    FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     BrowserModule,
     BsDropdownModule.forRoot(),
