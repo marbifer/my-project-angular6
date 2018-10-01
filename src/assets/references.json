@@ -1,0 +1,18 @@
+{ 
+
+  "select":  [
+        "RT",
+        "YD",
+        "UI",
+        "UX"
+    ],    
+   "codes": {
+        "code2": null,
+        "code3": [
+            "ARS",
+            "EUR",
+            "UDS"
+        ]
+    }
+
+}
