@@ -44,9 +44,9 @@ export class ReferencesService {
     return {
       select: [''],
       codes: {
-        code2: 102,
-        code3: [''],
-      }
+        code2: 102
+      },
+      currency: ['']
     };
   }
 }

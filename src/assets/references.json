@@ -6,13 +6,12 @@
         "UI",
         "UX"
     ],    
-   "codes": {
-        "code2": null,
-        "code3": [
-            "ARS",
-            "EUR",
-            "UDS"
-        ]
-    }
-
+   "code": {
+        "code2": null
+    },
+    "currency":  [
+        "ARS",
+        "EUR",
+        "UDS"
+    ]
 }
