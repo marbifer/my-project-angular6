@@ -1,10 +1,13 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
-const CorreoSchema = new Schema({
-    select: [String],
-    code: { type: Number },
-    currency: [String]
+const PaymentsSchema = new Schema({
+    payments: [{
+        codePackage: Number,
+        date: String,
+        import: Number,
+        bill: String
+    }]
 });
 
 /* const correoSchema = new Schema({
@@ -14,4 +17,4 @@ const CorreoSchema = new Schema({
     salary: { type: Number, required: true}
 }); */
 
-module.exports = mongoose.model('Correo', CorreoSchema);
+module.exports = mongoose.model('Payments', PaymentsSchema);
