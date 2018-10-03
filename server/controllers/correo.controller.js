@@ -10,13 +10,6 @@ referenceCtrl.getDataFirstForm = async (req, res, next) => {
 }
 
 referenceCtrl.postDataFirstForm = async (req, res) => {
-    /* const dataReferences = new Reference({
-        select: req.body.select,
-        code: req.body.code.code2,
-        currency: req.body.currency
-    });
-    await dataReferences.save();
-    res.json({ status: 'Reference created' }); */
     const dataReference = new Reference(req.body);
     // console.log(dataReference);
     await dataReference.save();
