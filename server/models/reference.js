@@ -3,7 +3,7 @@ const { Schema } = mongoose;
 
 const ReferenceSchema = new Schema({
     select: [String],
-    code: { type: Number },
+    code: { code2: Number },
     currency: [String]
 });
 
