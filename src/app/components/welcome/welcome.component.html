@@ -18,7 +18,7 @@
                 <h6>Code</h6>
                 <form action="" #saveForm="ngForm">
                     <input [ngClass]=" { 'has-error' : addNumbersLength > 9 }" class="form-control" type="text" name="number1"
-                        placeholder="" [(ngModel)]="referencesCode?.codes.code2" #numbers="ngModel" minlength="0"
+                        placeholder="" [(ngModel)]="referencesCode?.code.code2" #numbers="ngModel" minlength="0"
                         maxlength="10" autocomplete="off" (keyup)="addNumbers()">
                     <span class="text-error">
                         <span class="text-blue" *ngIf="addNumbersLength > 0 && addNumbersLength < 10">Cantidad de
@@ -33,7 +33,7 @@
                 <h6>Currency</h6>
                 <select class="form-control" [(ngModel)]="currencySelection" (change)="mostrarSeleccionAntesDeAgregar()"
                     [disabled]="!selectable">
-                    <option *ngFor='let cur of currencyCode?.codes.code3; let i = index'>
+                    <option *ngFor='let cur of currencyCode?.currency; let i = index'>
                         <div>{{ cur }}</div>
                     </option>
                 </select>

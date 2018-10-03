@@ -1,12 +1,12 @@
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule, ModuleWithProviders } from '@angular/core';
-import { WelcomeComponent } from './pages/welcome/welcome.component';
-import { QuestionsComponent } from './pages/questions/questions.component';
-import { ContactComponent } from './pages/contact/contact.component';
-import { ProfileComponent } from './pages/profile/profile.component';
+import { WelcomeComponent } from './components/welcome/welcome.component';
+import { QuestionsComponent } from './components/questions/questions.component';
+import { ContactComponent } from './components/contact/contact.component';
+import { ProfileComponent } from './components/profile/profile.component';
 import { MyFormComponent } from './my-form/my-form.component';
-import { LoginComponent } from './pages/login/login.component';
-import { RegisterComponent } from './pages/register/register.component';
+import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
 
 const APP_ROUTES: Routes = [
     { path: 'welcome', component: WelcomeComponent },
