@@ -13,15 +13,18 @@ import { store } from '@angular/core/src/render3/instructions';
 })
 export class ReferencesService {
 
-  private referencesUrl = './assets/references.json';
+  // private referencesUrl = './assets/references.json';
   readonly URL_API = 'http://localhost:3000/api/my-practice';
 
-  public selectedReference = ReferenceModel;
+  // public selectedReference: any;
+  // private referenceArray: ReferenceModel[];
 
   private selectItemsSource = new BehaviorSubject<References | null>(null);
   public selectItemsChanges$ = this.selectItemsSource.asObservable();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    // this.selectedReference = new ReferenceModel();
+  }
 
   /* public getReferences(): void {
     /* if (this.references) {
@@ -29,19 +32,25 @@ export class ReferencesService {
     } */
 
   /* this.http.get<References>(this.referencesUrl)
-   .subscribe(
-     data => {
-       console.log('request', JSON.stringify(data));
-       this.selectItemsSource.next(data);
-     },
-     catchError(this.handleError)
-   );
-}  */
+    .subscribe(
+      data => {
+        console.log('request', JSON.stringify(data));
+        this.selectItemsSource.next(data);
+      },
+      catchError(this.handleError)
+    );
+} */
 
   /////////////////////////////////////////////////////////////////////////////////////
   // Consulta con mongo:
-  getReferences() {
-    return this.http.get(this.URL_API);
+  getReferences2() {
+    this.http.get(this.URL_API).subscribe(
+      response => {
+        console.log('request', JSON.stringify(response[0]));
+        this.selectItemsSource.next(response[0]);
+      },
+      catchError(this.handleError)
+    );
   }
 
   postReference(Reference: ReferenceModel) {
@@ -66,9 +75,10 @@ export class ReferencesService {
   private initializeReference(): References {
     // Return an initialized object
     return {
+      _id: '',
       select: [''],
-      codes: {
-        code2: 102
+      code: {
+        code2: null
       },
       currency: ['']
     };

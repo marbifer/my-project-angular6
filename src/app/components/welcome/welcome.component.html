@@ -2,12 +2,12 @@
 <div class="container marketing mx-auto">
     <h4 class="text-muted my-3">Ingresa el código de tu paquete</h4>
     <div class="shadow p-3 mb-5 pt-4 pb-4 white rounded wrapper">
-        <form action="" #saveForm="ngForm" (ngSubmit)="searchReference(saveForm)">
+        <form #saveForm="ngForm" (ngSubmit)="searchReference(saveForm)">
             <div class="row center-block">
                 <div class="col-md-4">
                     <h6>Reference</h6>
-                    <select class="form-control" [(ngModel)]="currentSelection" (change)="mostrarSeleccionAntesDeAgregar()"
-                        [disabled]="!selectable" [ngModelOptions]="{standalone: true}">
+                    <select name="ref" class="form-control" [(ngModel)]="currentSelection" (change)="mostrarSeleccionAntesDeAgregar()"
+                        [disabled]="!selectable">
                         <option *ngFor='let ref of referencesCode?.select; let i = index'>
                             <div>{{ ref }}</div>
                         </option>
@@ -32,14 +32,14 @@
                     <h6>Currency</h6>
                     <select name="currency" class="form-control" [(ngModel)]="currencySelection" (change)="mostrarSeleccionAntesDeAgregar()"
                         [disabled]="!selectable">
-                        <option *ngFor='let cur of currencyCode?.currency; let i = index'>
+                        <option *ngFor='let cur of referencesCode?.currency; let i = index'>
                             <div>{{ cur }}</div>
                         </option>
                     </select>
                 </div>
 
                 <div class="col-md-6 mb-2">
-                    <button [ngClass]=" { 'butt-active' : addNumbersLength > 8 }" type="button" class="btn btn-warning btn-lg mt-3 px-5"
+                    <button [ngClass]=" { 'butt-active' : addNumbersLength > 8 }" class="btn btn-warning btn-lg mt-3 px-5"
                         [disabled]="!selectable">Buscar
                     </button>
                 </div>

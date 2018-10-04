@@ -3,7 +3,6 @@ const Reference = require('../models/reference'); // Acá puedo consultar a la B
 const referenceCtrl = {};
 
 // Acá se hacen las consultas a la base de datos
-
 referenceCtrl.getDataFirstForm = async (req, res, next) => {
     const dataReferences = await Reference.find(); // References es la colección de la BD
     res.json(dataReferences);
@@ -11,7 +10,6 @@ referenceCtrl.getDataFirstForm = async (req, res, next) => {
 
 referenceCtrl.postDataFirstForm = async (req, res) => {
     const dataReference = new Reference(req.body);
-    // console.log(dataReference);
     await dataReference.save();
     res.json({
         status: 'Reference saved'
@@ -19,7 +17,7 @@ referenceCtrl.postDataFirstForm = async (req, res) => {
 }
 
 referenceCtrl.searchCorreo = async (req, res) => {
-    // Para encontrar un id específico por id: 
+    // Para encontrar un id específico: 
     const dataReference = await Reference.findById(req.params.id);
     res.json(dataReference);
 }

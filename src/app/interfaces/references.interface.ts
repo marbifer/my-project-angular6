@@ -1,5 +1,6 @@
 export interface References {
+    _id: string;
     select: string[];
-    codes: { code2: number };
+    code: { code2: number };
     currency: string[];
 }

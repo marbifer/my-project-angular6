@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy, Output, EventEmitter, ViewChild } from '@angular/core';
 import { References } from '../../interfaces/references.interface';
+import { ReferenceModel } from '../../models/reference';
 import { ReferencesService } from '../../services/service.index';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
@@ -16,7 +17,7 @@ export class WelcomeComponent implements OnInit, OnDestroy {
   private addNumbersLength: number;
   public errorMessage: string;
 
-  public currencyCode: References;
+  // public currencyCode: References;
   private currencySelection: string;
   private selectable = false;
   private sub: Subscription;
@@ -32,13 +33,17 @@ export class WelcomeComponent implements OnInit, OnDestroy {
 
     this.sub = this._referencesService.selectItemsChanges$.subscribe(
       selectItems => {
-        console.log('testtttt', selectItems);
+        console.log('ooooooooooo', selectItems);
         this.referencesCode = selectItems;
-        this.currencyCode = selectItems;
       }
     );
 
-    this._referencesService.getReferences();
+    // this._referencesService.getReferences();
+    this._referencesService.getReferences2();
+  }
+
+  searchReference(form: NgForm) {
+    console.log('SEARCH', form.value);
   }
 
   mostrarSeleccionAntesDeAgregar() {
