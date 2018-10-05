@@ -48,7 +48,7 @@ referenceCtrl.editProfileCorreo = async (req, res) => {
     res.json({ status: 'Reference Updated' });
 }
 
-referenceCtrl.deleteProfile = async (req, res) => {
+referenceCtrl.deleteReference = async (req, res) => {
     await Reference.findByIdAndRemove(req.params.id);
     res.json({ status: 'Reference Deleted' });
 };

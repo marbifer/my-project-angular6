@@ -26,5 +26,6 @@
             "bill": "PDF"
         }
     ],
-    "ref": "RT"
+    "ref": "RT",
+    "currency": "USD"
 }
