@@ -7,7 +7,8 @@ const PaymentsSchema = new Schema({
         date: String,
         import: Number,
         bill: String
-    }]
+    }],
+    ref: String
 });
 
 /* const correoSchema = new Schema({
