@@ -8,7 +8,8 @@ const PaymentsSchema = new Schema({
         import: Number,
         bill: String
     }],
-    ref: String
+    ref: String,
+    currency: String
 });
 
 /* const correoSchema = new Schema({

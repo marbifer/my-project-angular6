@@ -40,8 +40,14 @@ export class WelcomeComponent implements OnInit, OnDestroy {
     // First form REFERENCE
     this.sub = this._referencesService.selectItemsChanges$.subscribe(
       selectItems => {
-        console.log('test1', selectItems);
-        this.referencesCode = selectItems;
+        console.log('Se subscribe para traer los items almacenados en subject para el Dropdown ', selectItems);
+
+        if (selectItems !== null) { // Se verifica que el subject no este vacío.
+          this.referencesCode = selectItems;
+          this.currentSelection = selectItems.select[0];
+          this.currencySelection = selectItems.currency[0];
+        }
+
       }
     );
 
@@ -59,12 +65,14 @@ export class WelcomeComponent implements OnInit, OnDestroy {
   searchReference(form: NgForm) {
     console.log('SEARCH', form.value);
     const selectedRef = this.currentSelection;
+    const selectedCurrency = this.currencySelection;
     const body = {
-      ref: selectedRef
+      ref: selectedRef,
+      currency: selectedCurrency
     };
     this._referencesService.postPaymentsFilter(body);
 
-    if (!selectedRef && this.addNumbersLength > 9) {
+    if (!selectedRef && !selectedCurrency && this.addNumbersLength > 9) {
       this.showTable = false;
     } else {
       this.showTable = true;

@@ -1,6 +1,7 @@
 export interface List {
     payments: Array<Row>;
     ref: string;
+    currency: string;
 }
 
 export interface Row {

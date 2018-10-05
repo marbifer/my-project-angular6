@@ -52,7 +52,11 @@
         El campo Code tiene más de 9 dígitos. <b>Filtre nuevamente</b> para que aparezacn sus pagos.
     </div>
 
-    <div *ngIf="!!showTable">
+    <div class="alert alert-primary" role="alert" *ngIf="tableList === undefined">
+        No hay coincidencias.
+    </div>
+
+    <div *ngIf="!!showTable && tableList !== undefined">
         <h4 class="text-muted mb-3">Tus pagos</h4>
         <table class="table table-hover">
             <thead>
