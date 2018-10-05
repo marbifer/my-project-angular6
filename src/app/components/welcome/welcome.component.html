@@ -48,7 +48,11 @@
         </form>
     </div>
 
-    <div>
+    <div class="alert alert-danger" role="alert" *ngIf="!!errorMessage">
+        El campo Code tiene más de 9 dígitos. <b>Filtre nuevamente</b> para que aparezacn sus pagos.
+    </div>
+
+    <div *ngIf="!!showTable">
         <h4 class="text-muted mb-3">Tus pagos</h4>
         <table class="table table-hover">
             <thead>

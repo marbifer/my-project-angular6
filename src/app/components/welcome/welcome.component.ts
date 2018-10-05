@@ -18,12 +18,13 @@ export class WelcomeComponent implements OnInit, OnDestroy {
   public referencesCode: References;
   private currentSelection: string;
   private addNumbersLength: number;
-  public errorMessage: string;
+  private errorMessage = false;
 
   private currencySelection: string;
   private selectable = false;
 
   public tableList: List;
+  private showTable = false;
   private sub: Subscription;
   private subs: Subscription;
 
@@ -62,6 +63,12 @@ export class WelcomeComponent implements OnInit, OnDestroy {
       ref: selectedRef
     };
     this._referencesService.postPaymentsFilter(body);
+
+    if (!selectedRef && this.addNumbersLength > 9) {
+      this.showTable = false;
+    } else {
+      this.showTable = true;
+    }
   }
 
   mostrarSeleccionAntesDeAgregar() {
@@ -76,8 +83,14 @@ export class WelcomeComponent implements OnInit, OnDestroy {
     console.log('characters: ', this.addNumbersLength);
     if (this.addNumbersLength === 9) {
       this.selectable = true;
+      // this.showTable = true;
+      this.errorMessage = false;
     } else {
+      if (this.addNumbersLength > 9) {
+        this.errorMessage = true;
+      }
       this.selectable = false;
+      this.showTable = false;
     }
   }
 
