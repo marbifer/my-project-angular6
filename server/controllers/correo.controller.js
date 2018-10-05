@@ -1,4 +1,5 @@
 const Reference = require('../models/reference'); // Acá puedo consultar a la BD porque en models está el modelo de datos
+// const Payments = require('../models/payments');
 
 const referenceCtrl = {};
 

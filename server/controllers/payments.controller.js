@@ -1,15 +1,30 @@
-const Reference = require('../models/reference'); // Acá puedo consultar a la BD porque en models está el modelo de datos
-const Payments = require('../models/payments');
+const Payments = require('../models/payments'); // Acá puedo consultar a la BD porque en models está el modelo de datos
 
 const paymentsCtrl = {};
 
 // Acá se hacen las consultas a la base de datos
-paymentsCtrl.paymentsCorreo = async (req, res) => {
+paymentsCtrl.getPayments = async (req, res) => {
 
-    const { id } = req.params;
+    /* const { id } = req.params;
     const payments = await Payments.findById(id);
-    res.json(payments);
+    res.json(payments); */
 
+    const dataPayments = await Payments.find();
+    res.json(dataPayments);
+
+}
+
+paymentsCtrl.postPayments = async (req, res) => {
+    const dataPayments = new Payments(req.body);
+    await dataPayments.save();
+    res.json({
+        status: 'Payments saved'
+    });
+}
+
+paymentsCtrl.postPaymentsFilter = async (req, res) => {
+    const dataPayments = await Payments.find(req.body);
+    res.json(dataPayments);
 }
 
 module.exports = paymentsCtrl;

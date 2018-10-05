@@ -1,9 +1,12 @@
 import { Component, OnInit, OnDestroy, Output, EventEmitter, ViewChild } from '@angular/core';
-import { References } from '../../interfaces/references.interface';
 import { ReferenceModel } from '../../models/reference';
 import { ReferencesService } from '../../services/service.index';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
+
+/* Intesrfaces */
+import { References } from '../../interfaces/references.interface';
+import { List } from '../../interfaces/list.interface';
 
 @Component({
   selector: 'app-welcome',
@@ -17,10 +20,12 @@ export class WelcomeComponent implements OnInit, OnDestroy {
   private addNumbersLength: number;
   public errorMessage: string;
 
-  // public currencyCode: References;
   private currencySelection: string;
   private selectable = false;
+
+  public tableList: List;
   private sub: Subscription;
+  private subs: Subscription;
 
   @ViewChild(NgForm) saveForm: NgForm;
 
@@ -31,19 +36,32 @@ export class WelcomeComponent implements OnInit, OnDestroy {
     this.currentSelection = '';
     this.currencySelection = '';
 
+    // First form REFERENCE
     this.sub = this._referencesService.selectItemsChanges$.subscribe(
       selectItems => {
-        console.log('ooooooooooo', selectItems);
+        console.log('test1', selectItems);
         this.referencesCode = selectItems;
       }
     );
 
-    // this._referencesService.getReferences();
-    this._referencesService.getReferences2();
+    this._referencesService.getReferences();
+
+    // Table PAYMENTS
+    this.subs = this._referencesService.rowsChanges$.subscribe(
+      rowTable => {
+        console.log('rowTable', rowTable);
+        this.tableList = rowTable;
+      }
+    );
   }
 
   searchReference(form: NgForm) {
     console.log('SEARCH', form.value);
+    const selectedRef = this.currentSelection;
+    const body = {
+      ref: selectedRef
+    };
+    this._referencesService.postPaymentsFilter(body);
   }
 
   mostrarSeleccionAntesDeAgregar() {
@@ -65,6 +83,7 @@ export class WelcomeComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.sub.unsubscribe();
+    this.subs.unsubscribe();
   }
 
 }

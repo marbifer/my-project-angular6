@@ -6,7 +6,7 @@
             <div class="row center-block">
                 <div class="col-md-4">
                     <h6>Reference</h6>
-                    <select name="ref" class="form-control" [(ngModel)]="currentSelection" (change)="mostrarSeleccionAntesDeAgregar()"
+                    <select name="reference" class="form-control" [(ngModel)]="currentSelection" (change)="mostrarSeleccionAntesDeAgregar()"
                         [disabled]="!selectable">
                         <option *ngFor='let ref of referencesCode?.select; let i = index'>
                             <div>{{ ref }}</div>
@@ -60,23 +60,11 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th scope="row">012</th>
-                    <td>22/11/2018</td>
-                    <td>$120</td>
-                    <td>PDF</td>
-                </tr>
-                <tr>
-                    <th scope="row">345</th>
-                    <td>23/11/2018</td>
-                    <td>$100</td>
-                    <td>PDF</td>
-                </tr>
-                <tr>
-                    <th scope="row">678</th>
-                    <td>24/11/2018</td>
-                    <td>$300</td>
-                    <td>PDF</td>
+                <tr *ngFor='let pay of tableList?.payments; let i = index'>
+                    <th scope="row">{{pay.codePackage}}</th>
+                    <td>{{pay.date}}</td>
+                    <td>{{pay.import}}</td>
+                    <td>{{pay.bill}}</td>
                 </tr>
             </tbody>
         </table>
