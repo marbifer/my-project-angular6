@@ -17,6 +17,8 @@ app.use(express.json());
 // Routes
 app.use('/api/my-practice', require('./routes/my-practice.routes'));
 app.use('/api/payments', require('./routes/payments.routes'));
+app.use('/api/drop-questions', require('./routes/drop-questions.routes'));
+app.use('/api/questions', require('./routes/questions.routes'));
 
 // Starting the server
 app.listen(app.get('port'), () => {

@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 
 const myCorreo = require('../controllers/correo.controller');
-// const myPayments = require('../controllers/payments.controller');
 
 router.get('/', myCorreo.getDataFirstForm); // Datos pre cargados del primer form del home
 router.post('/', myCorreo.postDataFirstForm); // Mandar Datos del primer form del home a la BD

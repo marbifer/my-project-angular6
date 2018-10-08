@@ -1,5 +1,44 @@
 <div class="container marketing mx-auto mt-4">
   <div class="shadow p-3 mb-5 pt-5 pb-5 white rounded wrapper">
-    Preguntas Frecuentes...
+    <form #saveDrop="ngForm" (ngSubmit)="searchQuestionCategorie(saveDrop)">
+      <h5>Seleccione su categoría de preguntas</h5>
+
+      <div class="dropdown mt-4">
+        <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          {{ currentSelection }}
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a *ngFor='let drop of dropdownItems?.categories; let i = index' class="dropdown-item" (click)="selectCategory(drop)">
+            {{ drop }}</a>
+        </div>
+      </div>
+
+      <button class="btn btn-warning btn-lg mt-3 px-5">Buscar</button>
+    </form>
   </div>
+
+  <div class="alert alert-primary" role="alert" *ngIf="tableList === undefined">
+    No hay coincidencias.
+  </div>
+
+  <table class="table table-striped mt-5" *ngIf="!!showTable && tableList !== undefined">
+    <thead>
+      <tr>
+        <th scope="col">Categoría Relacionada</th>
+        <th scope="col">Pregunta</th>
+        <th scope="col">Respuesta</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor='let ques of tableList?.questions; let i = index'>
+        <td>{{ ques.categories }}</td>
+        <td>{{ ques.question }}</td>
+        <td>{{ ques.answer }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+
+
 </div>

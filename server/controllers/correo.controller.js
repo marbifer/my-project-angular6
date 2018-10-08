@@ -1,5 +1,4 @@
 const Reference = require('../models/reference'); // Acá puedo consultar a la BD porque en models está el modelo de datos
-// const Payments = require('../models/payments');
 
 const referenceCtrl = {};
 
@@ -22,18 +21,6 @@ referenceCtrl.searchCorreo = async (req, res) => {
     const dataReference = await Reference.findById(req.params.id);
     res.json(dataReference);
 }
-
-/* referenceCtrl.createContactCorreo = (req, res) => {
-    res.json({
-        status: 'createContactCorreo'
-    });
-}
-
-referenceCtrl.registerCorreo = (req, res) => {
-    res.json({
-        status: 'registerCorreo'
-    });
-} */
 
 referenceCtrl.editProfileCorreo = async (req, res) => {
     const { id } = req.params; // Obtener el id desde req.params

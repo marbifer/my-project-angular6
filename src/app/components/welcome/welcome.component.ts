@@ -1,10 +1,9 @@
 import { Component, OnInit, OnDestroy, Output, EventEmitter, ViewChild } from '@angular/core';
-import { ReferenceModel } from '../../models/reference';
 import { ReferencesService } from '../../services/service.index';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
-/* Intesrfaces */
+/* Interfaces */
 import { References } from '../../interfaces/references.interface';
 import { List } from '../../interfaces/list.interface';
 
