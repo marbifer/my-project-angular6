@@ -36,20 +36,7 @@ paymentsCtrl.postPaymentsFilter = async (req, res) => {
 paymentsCtrl.editPayments = async (req, res) => {
     const { id } = req.params; // Obtener el id desde req.params
     const dataPayments = {
-
-        // Acá irían los datos del form de la sección perfil: nombre, apellido, email, documento, etc.
-        /* select: req.body.select,
-        code: req.body.code.code2,
-        currency: req.body.currency, */
-
-        payments: [{
-            codePackage: req.body.payments.codePackage,
-            date: req.body.payments.date,
-            import: req.body.payments.import,
-            bill: req.body.payments.bill
-        }],
-        ref: req.body.ref,
-        currency: req.body.currency
+        ...req.body
     };
     await Payments.findByIdAndUpdate(id, { $set: dataPayments }, { new: true }); // $set es para decirle qué datos quiero actualizar
     res.json({ status: 'Payments Updated' });

@@ -6,7 +6,6 @@ import { catchError, tap, map } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
 import { References } from '../../interfaces/references.interface';
 import { List } from '../../interfaces/list.interface';
-import { ReferenceModel } from '../../models/reference';
 import { store } from '@angular/core/src/render3/instructions';
 
 @Injectable({

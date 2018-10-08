@@ -9,6 +9,4 @@ export interface Row {
     date: string;
     import: number;
     bill: string;
-    // Poner acá la referencia del formulario que no sea visible en la tabla de pagos,
-    // pero servirá para hacer el find en el post del controller
 }
