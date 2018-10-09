@@ -7,6 +7,9 @@ import { Subscription } from 'rxjs';
 import { References } from '../../interfaces/references.interface';
 import { List } from '../../interfaces/list.interface';
 
+/* NgRx */
+import { Store, select, State } from '@ngrx/store';
+
 @Component({
   selector: 'app-welcome',
   templateUrl: './welcome.component.html',
@@ -29,7 +32,10 @@ export class WelcomeComponent implements OnInit, OnDestroy {
 
   @ViewChild(NgForm) saveForm: NgForm;
 
-  constructor(public _referencesService: ReferencesService) { }
+  constructor(
+    public _referencesService: ReferencesService,
+    private store: Store<any>
+  ) { }
 
   ngOnInit() {
 
@@ -46,30 +52,38 @@ export class WelcomeComponent implements OnInit, OnDestroy {
           this.currentSelection = selectItems.select[0];
           this.currencySelection = selectItems.currency[0];
         }
-
       }
     );
 
     this._referencesService.getReferences();
 
     // Table PAYMENTS
-    this.subs = this._referencesService.rowsChanges$.subscribe(
-      rowTable => {
-        console.log('rowTable', rowTable);
-        this.tableList = rowTable;
-      }
-    );
+    // TODO: Unsubscribe
+    this.store.pipe(select('payments')).subscribe(
+      state => {
+        if (state) {
+          console.log('rowTable', state);
+          this.tableList = state.showListPayments;
+        }
+      });
   }
 
   searchReference(form: NgForm) {
     console.log('SEARCH', form.value);
     const selectedRef = this.currentSelection;
     const selectedCurrency = this.currencySelection;
+
     const body = {
       ref: selectedRef,
       currency: selectedCurrency
     };
-    this._referencesService.postPaymentsFilter(body);
+
+    this._referencesService.postPaymentsFilter(body).subscribe(res => {
+      this.store.dispatch({
+        type: 'CLICK_SEARCH_PAYMENTS',
+        payload: res[0]
+      });
+    });
 
     if (!selectedRef && !selectedCurrency && this.addNumbersLength > 9) {
       this.showTable = false;
@@ -103,7 +117,7 @@ export class WelcomeComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.sub.unsubscribe();
-    this.subs.unsubscribe();
+    // this.subs.unsubscribe();
   }
 
 }

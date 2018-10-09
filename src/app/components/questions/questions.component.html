@@ -10,7 +10,8 @@
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
           <a *ngFor='let drop of dropdownItems?.categories; let i = index' class="dropdown-item" (click)="selectCategory(drop)">
-            {{ drop }}</a>
+            {{ drop }}
+          </a>
         </div>
       </div>
 
