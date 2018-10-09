@@ -26,8 +26,8 @@ export class ReferencesService {
   public selectItemsChanges$ = this.selectItemsSource.asObservable();
 
   // Table Payments
-  private rowsSource = new BehaviorSubject<List | null>(null);
-  public rowsChanges$ = this.rowsSource.asObservable();
+  // private rowsSource = new BehaviorSubject<List | null>(null);
+  // public rowsChanges$ = this.rowsSource.asObservable();
 
   constructor(private http: HttpClient) { }
 
@@ -44,10 +44,7 @@ export class ReferencesService {
   }
 
   postPaymentsFilter(body) {
-    this.http.post(this.URL_API_PAY_FILTER, body).subscribe(
-      response => {
-        this.rowsSource.next(response[0]);
-      });
+    return this.http.post(this.URL_API_PAY_FILTER, body);
   }
 
   postReference(reference: References) {
