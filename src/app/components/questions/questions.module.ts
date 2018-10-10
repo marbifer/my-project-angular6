@@ -11,7 +11,7 @@ import { QuestionsComponent } from '../../components/questions/questions.compone
 
 /* NgRx */
 import { StoreModule } from '@ngrx/store';
-// import { reducer } from '../../state/product.reducer';
+import { reducer } from './state/questions.reducer';
 // import { EffectsModule } from '@ngrx/effects';
 // import { ProductEffects } from '/state/product.effects';
 
@@ -21,10 +21,10 @@ import { StoreModule } from '@ngrx/store';
     ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule,
-    BrowserModule
+    BrowserModule,
     // SharedModule,
     // RouterModule.forChild(productRoutes),
-    // StoreModule.forFeature('products', reducer), // Redux: el segundo parármetro es un reductor.
+    StoreModule.forFeature('questions', reducer), // Redux: el segundo parármetro es un reductor.
     // EffectsModule.forFeature([ProductEffects]) // Redux: efectos.
   ],
   declarations: [

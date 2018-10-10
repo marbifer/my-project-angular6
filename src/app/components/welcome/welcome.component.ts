@@ -8,7 +8,7 @@ import { References } from '../../interfaces/references.interface';
 import { List } from '../../interfaces/list.interface';
 
 /* NgRx */
-import { Store, select, State } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 
 @Component({
   selector: 'app-welcome',
