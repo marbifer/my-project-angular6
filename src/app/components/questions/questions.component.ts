@@ -7,6 +7,10 @@ import { Subscription } from 'rxjs';
 import { ListQuestions } from '../../interfaces/questions.interface';
 import { Dropdown } from '../../interfaces/dropdown.interface';
 
+/* NgRx */
+import { select, Store } from '@ngrx/store';
+
+
 @Component({
   selector: 'app-questions',
   templateUrl: './questions.component.html',
@@ -19,11 +23,13 @@ export class QuestionsComponent implements OnInit, OnDestroy {
   private showTable = false;
   public tableList: ListQuestions;
   private sub: Subscription;
-  private subs: Subscription;
 
   @ViewChild(NgForm) saveForm: NgForm;
 
-  constructor(public _questionsService: QuestionsService) { }
+  constructor(
+    public _questionsService: QuestionsService,
+    private store: Store<any>
+  ) { }
 
   ngOnInit() {
 
@@ -42,28 +48,36 @@ export class QuestionsComponent implements OnInit, OnDestroy {
 
     this._questionsService.getQuestions();
 
-
     // Table QUESTIONS
-    this.subs = this._questionsService.rowsChanges$.subscribe(
-      rowTable => {
-        console.log('rowTable', rowTable);
-        this.tableList = rowTable;
-      }
-    );
+    // TODO: Unsubscribe
+    this.store.pipe(select('questions')).subscribe(
+      state => {
+        console.log('rowTable', state);
+        this.tableList = state.showListQuestions;
+      });
   }
 
   selectCategory(selectCategory) {
-    console.log('Lo seleccionado actualmente en el input de referencia: ', this.currentSelection);
+    console.log('Lo seleccionado actualmente en el input de referencia: ', selectCategory);
     this.currentSelection = selectCategory;
   }
 
   searchQuestionCategorie(form: NgForm) {
     console.log('SEARCH', form.value);
     const selectedCat = this.currentSelection;
+    console.log('acaaaaaaaaaaaa', selectedCat);
+
     const body = {
       catRelationship: selectedCat
     };
-    this._questionsService.postQuestionsFilter(body);
+
+    this._questionsService.postQuestionsFilter(body).subscribe(response => {
+      this.store.dispatch({
+        type: 'CLICK_SEARCH_QUESTIONS',
+        payload: response[0]
+      });
+    });
+
 
     if (!selectedCat) {
       this.showTable = false;

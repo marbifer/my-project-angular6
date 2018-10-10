@@ -22,8 +22,8 @@ export class QuestionsService {
   public dropItemsChanges$ = this.dropItemsSource.asObservable();
 
   // Table Questions
-  private rowsSource = new BehaviorSubject<ListQuestions | null>(null);
-  public rowsChanges$ = this.rowsSource.asObservable();
+  // private rowsSource = new BehaviorSubject<ListQuestions | null>(null);
+  // public rowsChanges$ = this.rowsSource.asObservable();
 
   constructor(private http: HttpClient) { }
 
@@ -40,10 +40,7 @@ export class QuestionsService {
   }
 
   postQuestionsFilter(body) {
-    this.http.post(this.URL_API_DROP_FILTER, body).subscribe(
-      response => {
-        this.rowsSource.next(response[0]);
-      });
+    return this.http.post(this.URL_API_DROP_FILTER, body);
   }
 
   postQuestions(question: Dropdown) {

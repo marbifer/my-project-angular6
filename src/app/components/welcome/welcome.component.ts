@@ -8,7 +8,8 @@ import { References } from '../../interfaces/references.interface';
 import { List } from '../../interfaces/list.interface';
 
 /* NgRx */
-import { Store, select, State } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
+import * as fromPayment from './state/welcome.reducer';
 
 @Component({
   selector: 'app-welcome',
@@ -34,7 +35,7 @@ export class WelcomeComponent implements OnInit, OnDestroy {
 
   constructor(
     public _referencesService: ReferencesService,
-    private store: Store<any>
+    private store: Store<fromPayment.State>
   ) { }
 
   ngOnInit() {
@@ -61,10 +62,8 @@ export class WelcomeComponent implements OnInit, OnDestroy {
     // TODO: Unsubscribe
     this.store.pipe(select('payments')).subscribe(
       state => {
-        if (state) {
-          console.log('rowTable', state);
-          this.tableList = state.showListPayments;
-        }
+        console.log('rowTable', state);
+        this.tableList = state.showListPayments;
       });
   }
 
