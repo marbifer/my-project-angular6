@@ -52,10 +52,8 @@ export class QuestionsComponent implements OnInit, OnDestroy {
     // TODO: Unsubscribe
     this.store.pipe(select('questions')).subscribe(
       state => {
-        if (state) {
-          console.log('rowTable', state);
-          this.tableList = state.showListQuestions;
-        }
+        console.log('rowTable', state);
+        this.tableList = state.showListQuestions;
       });
   }
 

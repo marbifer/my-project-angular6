@@ -14,6 +14,8 @@ import { RouterModule } from '@angular/router';
 
 /* NgRx */
 import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
 
 import { WelcomeModule } from './components/welcome/welcome.module';
 import { QuestionsModule } from './components/questions/questions.module';
@@ -21,6 +23,7 @@ import { ContactModule } from './components/contact/contact.module';
 import { ProfileModule } from './components/profile/profile.module';
 import { LoginModule } from './components/login/login.module';
 import { RegisterModule } from './components/register/register.module';
+
 
 @NgModule({
   declarations: [
@@ -42,7 +45,12 @@ import { RegisterModule } from './components/register/register.module';
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),
     ModalModule.forRoot(),
-    StoreModule.forRoot({})
+    StoreModule.forRoot({}),
+    StoreDevtoolsModule.instrument({
+      name: 'APM Demo App Devtools',
+      maxAge: 25,
+      logOnly: environment.production
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]
