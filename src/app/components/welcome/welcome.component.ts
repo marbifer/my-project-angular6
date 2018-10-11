@@ -10,6 +10,7 @@ import { List } from '../../interfaces/list.interface';
 /* NgRx */
 import { Store, select } from '@ngrx/store';
 import * as fromPayment from './state/welcome.reducer';
+import * as welcomeActions from './state/welcome.actions';
 
 @Component({
   selector: 'app-welcome',
@@ -60,11 +61,19 @@ export class WelcomeComponent implements OnInit, OnDestroy {
 
     // Table PAYMENTS
     // TODO: Unsubscribe
-    this.store.pipe(select('payments')).subscribe(
+    /* this.store.pipe(select('payments')).subscribe(
       state => {
         console.log('rowTable', state);
         this.tableList = state.showListPayments;
-      });
+      }); */
+
+    // Redux With selectors
+    this.store.pipe(select(fromPayment.getShowPayments)).subscribe(
+      showListPayments =>
+        // console.log('rowTable', showListPayments);
+        this.tableList = showListPayments
+    );
+
   }
 
   searchReference(form: NgForm) {
@@ -77,11 +86,17 @@ export class WelcomeComponent implements OnInit, OnDestroy {
       currency: selectedCurrency
     };
 
-    this._referencesService.postPaymentsFilter(body).subscribe(res => {
+    // Without Actions
+    /* this._referencesService.postPaymentsFilter(body).subscribe(res => {
       this.store.dispatch({
         type: 'CLICK_SEARCH_PAYMENTS',
         payload: res[0]
       });
+    }); */
+
+    // With Actions
+    this._referencesService.postPaymentsFilter(body).subscribe(res => {
+      this.store.dispatch(new welcomeActions.ClickSearchPayments(res[0]));
     });
 
     if (!selectedRef && !selectedCurrency && this.addNumbersLength > 9) {
