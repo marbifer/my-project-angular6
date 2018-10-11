@@ -50,6 +50,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
 
     // Table QUESTIONS
     // TODO: Unsubscribe
+    // Sin Selectors
     this.store.pipe(select('questions')).subscribe(
       state => {
         console.log('rowTable', state);
@@ -65,7 +66,6 @@ export class QuestionsComponent implements OnInit, OnDestroy {
   searchQuestionCategorie(form: NgForm) {
     console.log('SEARCH', form.value);
     const selectedCat = this.currentSelection;
-    console.log('acaaaaaaaaaaaa', selectedCat);
 
     const body = {
       catRelationship: selectedCat
