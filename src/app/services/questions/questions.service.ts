@@ -18,25 +18,16 @@ export class QuestionsService {
   readonly URL_API_DROP_FILTER = 'http://localhost:3000/api/questions/find';
 
   // Dropdown Questions
-  private dropItemsSource = new BehaviorSubject<Dropdown | null>(null);
-  public dropItemsChanges$ = this.dropItemsSource.asObservable();
-
-  // Table Questions
-  // private rowsSource = new BehaviorSubject<ListQuestions | null>(null);
-  // public rowsChanges$ = this.rowsSource.asObservable();
+  // private dropItemsSource = new BehaviorSubject<Dropdown | null>(null);
+  // public dropItemsChanges$ = this.dropItemsSource.asObservable();
 
   constructor(private http: HttpClient) { }
 
-  /////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////
   // Consulta con mongo DROPDOWN QUESTIONS:
+  // WITH STORE
   getQuestions() {
-    this.http.get(this.URL_API_DROP).subscribe(
-      response => {
-        console.log('request DROPDOWN QUESTIONS', JSON.stringify(response[0]));
-        this.dropItemsSource.next(response[0]);
-      },
-      catchError(this.handleError)
-    );
+    return this.http.get(this.URL_API_DROP);
   }
 
   postQuestionsFilter(body) {
@@ -54,8 +45,6 @@ export class QuestionsService {
   deleteQuestions(_id: string) {
     return this.http.delete(this.URL_API_DROP + `/${_id}`);
   }
-
-  //////////////////////////////////////////////////////////////////////////////////////////
 
   private handleError(error: any): Promise<any> {
     console.error('An error occurred', error);

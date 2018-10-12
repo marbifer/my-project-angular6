@@ -11,7 +11,7 @@ import { WelcomeComponent } from '../../components/welcome/welcome.component';
 
 /* NgRx */
 import { StoreModule } from '@ngrx/store';
-import { reducer } from './state/welcome.reducer';
+import { reducer } from '../state/welcome.reducer';
 // import { EffectsModule } from '@ngrx/effects';
 // import { ProductEffects } from '/state/product.effects';
 
@@ -24,7 +24,7 @@ import { reducer } from './state/welcome.reducer';
     BrowserModule,
     // SharedModule,
     // RouterModule.forChild(productRoutes),
-    StoreModule.forFeature('payments', reducer), // Redux: el segundo parármetro es un reductor.
+    StoreModule.forFeature('welcome', reducer), // Redux: el segundo parármetro es un reductor.
     // EffectsModule.forFeature([ProductEffects]) // Redux: efectos.
   ],
   declarations: [
