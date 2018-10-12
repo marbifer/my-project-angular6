@@ -9,8 +9,8 @@ import { List } from '../../interfaces/list.interface';
 
 /* NgRx */
 import { Store, select } from '@ngrx/store';
-import * as fromPayment from './state/welcome.reducer';
-import * as welcomeActions from './state/welcome.actions';
+import * as fromWelcome from '../state/welcome.reducer';
+import * as welcomeActions from '../state/welcome.actions';
 
 @Component({
   selector: 'app-welcome',
@@ -20,6 +20,7 @@ import * as welcomeActions from './state/welcome.actions';
 export class WelcomeComponent implements OnInit, OnDestroy {
 
   public referencesCode: References;
+  public fieldCode: number;
   private currentSelection: string;
   private addNumbersLength: number;
   private errorMessage = false;
@@ -30,13 +31,13 @@ export class WelcomeComponent implements OnInit, OnDestroy {
   public tableList: List;
   private showTable = false;
   private sub: Subscription;
-  private subs: Subscription;
+  // private subs: Subscription;
 
   @ViewChild(NgForm) saveForm: NgForm;
 
   constructor(
     public _referencesService: ReferencesService,
-    private store: Store<fromPayment.State>
+    private store: Store<fromWelcome.State>
   ) { }
 
   ngOnInit() {
@@ -45,34 +46,31 @@ export class WelcomeComponent implements OnInit, OnDestroy {
     this.currencySelection = '';
 
     // First form REFERENCE
-    this.sub = this._referencesService.selectItemsChanges$.subscribe(
-      selectItems => {
-        console.log('Se subscribe para traer los items almacenados en subject para el Dropdown ', selectItems);
+    // WITH STORE
+    this.store.pipe(select(fromWelcome.getShowReferences)).subscribe(
+      showReferences => {
+        console.log('Se subscribe para traer los items almacenados en subject para el Dropdown', showReferences);
 
-        if (selectItems !== null) { // Se verifica que el subject no este vacío.
-          this.referencesCode = selectItems;
-          this.currentSelection = selectItems.select[0];
-          this.currencySelection = selectItems.currency[0];
+        if (showReferences !== null) { // Se verifica que el subject no este vacío.
+          console.log('reference', showReferences);
+          this.fieldCode = showReferences.code.code2;
+          this.referencesCode = showReferences;
+          this.currentSelection = showReferences.select[0];
+          this.currencySelection = showReferences.currency[0];
         }
-      }
-    );
+      });
 
-    this._referencesService.getReferences();
+    // First form REFERENCE => dispatch WITH ACTIONS
+    this._referencesService.getReferences().subscribe(res => {
+      console.log('RESPONSE:', res);
+      this.store.dispatch(new welcomeActions.InitializeCurrentReference(res[0]));
+    });
 
     // Table PAYMENTS
     // TODO: Unsubscribe
-    /* this.store.pipe(select('payments')).subscribe(
-      state => {
-        console.log('rowTable', state);
-        this.tableList = state.showListPayments;
-      }); */
-
     // Redux With selectors
-    this.store.pipe(select(fromPayment.getShowPayments)).subscribe(
-      showListPayments =>
-        // console.log('rowTable', showListPayments);
-        this.tableList = showListPayments
-    );
+    this.store.pipe(select(fromWelcome.getShowPayments)).subscribe(
+      showListPayments => this.tableList = showListPayments);
 
   }
 
@@ -86,17 +84,9 @@ export class WelcomeComponent implements OnInit, OnDestroy {
       currency: selectedCurrency
     };
 
-    // Without Actions
-    /* this._referencesService.postPaymentsFilter(body).subscribe(res => {
-      this.store.dispatch({
-        type: 'CLICK_SEARCH_PAYMENTS',
-        payload: res[0]
-      });
-    }); */
-
     // With Actions
     this._referencesService.postPaymentsFilter(body).subscribe(res => {
-      this.store.dispatch(new welcomeActions.ClickSearchPayments(res[0]));
+      this.store.dispatch(new welcomeActions.ClickSearchPayments(res[0])); // La respuesta se va a almacenar en el Store.
     });
 
     if (!selectedRef && !selectedCurrency && this.addNumbersLength > 9) {
@@ -130,7 +120,7 @@ export class WelcomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.sub.unsubscribe();
+    // this.sub.unsubscribe();
     // this.subs.unsubscribe();
   }
 

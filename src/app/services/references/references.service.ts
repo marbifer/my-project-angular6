@@ -13,38 +13,25 @@ import { store } from '@angular/core/src/render3/instructions';
 })
 export class ReferencesService {
 
-  // private referencesUrl = './assets/references.json';
   readonly URL_API = 'http://localhost:3000/api/my-practice';
   readonly URL_API_PAY = 'http://localhost:3000/api/payments';
   readonly URL_API_PAY_FILTER = 'http://localhost:3000/api/payments/find';
 
-  // public selectedReference: any;
-  // private referenceArray: ReferenceModel[];
-
   // Form Reference
-  private selectItemsSource = new BehaviorSubject<References | null>(null);
-  public selectItemsChanges$ = this.selectItemsSource.asObservable();
-
-  // Table Payments
-  // private rowsSource = new BehaviorSubject<List | null>(null);
-  // public rowsChanges$ = this.rowsSource.asObservable();
+  // private selectItemsSource = new BehaviorSubject<References | null>(null);
+  // public selectItemsChanges$ = this.selectItemsSource.asObservable();
 
   constructor(private http: HttpClient) { }
 
-  /////////////////////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////
   // Consulta con mongo FIRST FORM REFERENCE:
+  // WITH STORE
   getReferences() {
-    this.http.get(this.URL_API).subscribe(
-      response => {
-        console.log('request FORM REFERENCE', JSON.stringify(response[0]));
-        this.selectItemsSource.next(response[0]);
-      },
-      catchError(this.handleError)
-    );
+    return this.http.get(this.URL_API);
   }
 
   postPaymentsFilter(body) {
-    return this.http.post(this.URL_API_PAY_FILTER, body);
+    return this.http.post(this.URL_API_PAY_FILTER, body); // Va a la BD de mongo
   }
 
   postReference(reference: References) {
@@ -58,8 +45,6 @@ export class ReferencesService {
   deleteReference(_id: string) {
     return this.http.delete(this.URL_API + `/${_id}`);
   }
-
-  //////////////////////////////////////////////////////////////////////////////////////////
 
   private handleError(error: any): Promise<any> {
     console.error('An error occurred', error);

@@ -18,8 +18,8 @@
                 <div class="col-md-4">
                     <h6>Code</h6>
                     <input [ngClass]=" { 'has-error' : addNumbersLength > 9 }" class="form-control" type="text" name="number1"
-                        placeholder="" [(ngModel)]="referencesCode?.code.code2" #numbers="ngModel" minlength="0"
-                        maxlength="10" autocomplete="off" (keyup)="addNumbers()">
+                        placeholder="" [(ngModel)]="fieldCode" #numbers="ngModel" minlength="0" maxlength="10"
+                        autocomplete="off" (keyup)="addNumbers()">
                     <span class="text-error">
                         <span class="text-blue" *ngIf="addNumbersLength > 0 && addNumbersLength < 10">Cantidad de
                             dígitos ingresados: {{ addNumbersLength }}</span>

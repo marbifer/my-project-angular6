@@ -9,7 +9,8 @@ import { Dropdown } from '../../interfaces/dropdown.interface';
 
 /* NgRx */
 import { select, Store } from '@ngrx/store';
-
+import * as fromWelcome from '../state/welcome.reducer';
+import * as welcomeActions from '../state/welcome.actions';
 
 @Component({
   selector: 'app-questions',
@@ -22,7 +23,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
   private currentSelection: string;
   private showTable = false;
   public tableList: ListQuestions;
-  private sub: Subscription;
+  // private sub: Subscription;
 
   @ViewChild(NgForm) saveForm: NgForm;
 
@@ -34,28 +35,29 @@ export class QuestionsComponent implements OnInit, OnDestroy {
   ngOnInit() {
 
     // Dropdown Questions
-    this.sub = this._questionsService.dropItemsChanges$.subscribe(
-      dropItems => {
-        console.log('Se subscribe para traer los items almacenados en subject para el Dropdown ', dropItems);
+    // WITH STORE
+    this.store.pipe(select(fromWelcome.getShowDropQuestions)).subscribe(
+      showDataDropdown => {
+        console.log('Se subscribe para traer los items almacenados en subject para el Dropdown', showDataDropdown);
 
-        if (dropItems !== null) { // Se verifica que el subject no este vacío.
-          this.dropdownItems = dropItems;
-          this.currentSelection = dropItems.categories[0];
+        if (showDataDropdown !== null) { // Se verifica que el subject no este vacío.
+          // this.dataDropdown = showDataDropdown;
+          this.dropdownItems = showDataDropdown;
+          this.currentSelection = showDataDropdown.categories[0];
         }
+      });
 
-      }
-    );
-
-    this._questionsService.getQuestions();
+    this._questionsService.getQuestions().subscribe(res => {
+      console.log('RESPONSE', res);
+      this.store.dispatch(new welcomeActions.GetDataDropdown(res[0]));
+    });
 
     // Table QUESTIONS
     // TODO: Unsubscribe
-    // Sin Selectors
-    this.store.pipe(select('questions')).subscribe(
-      state => {
-        console.log('rowTable', state);
-        this.tableList = state.showListQuestions;
-      });
+    // Redux With selectors
+    this.store.pipe(select(fromWelcome.getShowListQuestions)).subscribe(
+      showListQuestions => this.tableList = showListQuestions);
+
   }
 
   selectCategory(selectCategory) {
@@ -71,13 +73,10 @@ export class QuestionsComponent implements OnInit, OnDestroy {
       catRelationship: selectedCat
     };
 
-    this._questionsService.postQuestionsFilter(body).subscribe(response => {
-      this.store.dispatch({
-        type: 'CLICK_SEARCH_QUESTIONS',
-        payload: response[0]
-      });
+    // With Actions
+    this._questionsService.postQuestionsFilter(body).subscribe(res => {
+      this.store.dispatch(new welcomeActions.ClickSearchQuestions(res[0]));
     });
-
 
     if (!selectedCat) {
       this.showTable = false;
@@ -87,7 +86,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.sub.unsubscribe();
+    // this.sub.unsubscribe();
   }
 
 
