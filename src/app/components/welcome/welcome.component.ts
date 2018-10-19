@@ -1,7 +1,7 @@
-import { Component, OnInit, OnDestroy, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, ViewChild, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
 import { ReferencesService } from '../../services/service.index';
 import { FormsModule, NgForm } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 
 /* Interfaces */
 import { References } from '../../interfaces/references.interface';
@@ -11,6 +11,7 @@ import { List } from '../../interfaces/list.interface';
 import { Store, select } from '@ngrx/store';
 import * as fromWelcome from '../state/welcome.reducer';
 import * as welcomeActions from '../state/welcome.actions';
+import { takeWhile } from 'rxjs/operators';
 
 @Component({
   selector: 'app-welcome',
@@ -19,21 +20,36 @@ import * as welcomeActions from '../state/welcome.actions';
 })
 export class WelcomeComponent implements OnInit, OnDestroy {
 
+  @ViewChild(NgForm) saveForm: NgForm;
+  /* @Input() myErrorMessage: string;
+   @Input() referencesCode: References;
+   @Input() tableList: List;
+   @Output() searchRef = new EventEmitter<any>();
+   @Output() addNum = new EventEmitter<any>();
+
+   searchReference(form: NgForm): void {
+     this.searchRef.emit(form);
+   }
+
+   addNumbers(): void {
+     this.addNum.emit();
+   } */
+
   public referencesCode: References;
   public fieldCode: number;
   private currentSelection: string;
   private addNumbersLength: number;
   private errorMessage = false;
+  private myErrorMessage$: Observable<string>;
 
   private currencySelection: string;
   private selectable = false;
 
   public tableList: List;
   private showTable = false;
-  private sub: Subscription;
-  // private subs: Subscription;
-
-  @ViewChild(NgForm) saveForm: NgForm;
+  private componentActive = true;
+  // private subRef: Subscription;
+  // private subPay: Subscription;
 
   constructor(
     public _referencesService: ReferencesService,
@@ -42,23 +58,29 @@ export class WelcomeComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
+    console.log('subscribe: ', this.componentActive);
+
     this.currentSelection = '';
     this.currencySelection = '';
 
     // First form REFERENCE
     // WITH STORE
-    this.store.pipe(select(fromWelcome.getShowReferences)).subscribe(
-      showReferences => {
-        console.log('Se subscribe para traer los items almacenados en subject para el Dropdown', showReferences);
+    this.myErrorMessage$ = this.store.pipe(select(fromWelcome.getError));
+    // this.store.dispatch(new welcomeActions.Load());
+    this.store.pipe(select(fromWelcome.getShowReferences),
+      takeWhile(() => this.componentActive))
+      .subscribe(
+        showReferences => {
+          console.log('Se subscribe para traer los items almacenados en subject para el Dropdown', showReferences);
 
-        if (showReferences !== null) { // Se verifica que el subject no este vacío.
-          console.log('reference', showReferences);
-          this.fieldCode = showReferences.code.code2;
-          this.referencesCode = showReferences;
-          this.currentSelection = showReferences.select[0];
-          this.currencySelection = showReferences.currency[0];
-        }
-      });
+          if (showReferences !== null) { // Se verifica que el subject no este vacío.
+            console.log('reference', showReferences);
+            this.fieldCode = showReferences.code.code2;
+            this.referencesCode = showReferences;
+            this.currentSelection = showReferences.select[0];
+            this.currencySelection = showReferences.currency[0];
+          }
+        });
 
     // First form REFERENCE => dispatch WITH ACTIONS
     this._referencesService.getReferences().subscribe(res => {
@@ -67,10 +89,11 @@ export class WelcomeComponent implements OnInit, OnDestroy {
     });
 
     // Table PAYMENTS
-    // TODO: Unsubscribe
     // Redux With selectors
-    this.store.pipe(select(fromWelcome.getShowPayments)).subscribe(
-      showListPayments => this.tableList = showListPayments);
+    this.store.pipe(select(fromWelcome.getShowPayments),
+      takeWhile(() => this.componentActive))
+      .subscribe(
+        showListPayments => this.tableList = showListPayments);
 
   }
 
@@ -120,8 +143,8 @@ export class WelcomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    // this.sub.unsubscribe();
-    // this.subs.unsubscribe();
+    this.componentActive = false;
+    console.log('Unsubscribe de references: ', this.componentActive);
   }
 
 }

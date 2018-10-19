@@ -23,12 +23,14 @@ import { ContactModule } from './components/contact/contact.module';
 import { ProfileModule } from './components/profile/profile.module';
 import { LoginModule } from './components/login/login.module';
 import { RegisterModule } from './components/register/register.module';
-
+import { EffectsModule } from '@ngrx/effects';
+import { WelcomeShellComponent } from './containers/welcome-shell/welcome-shell.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    MyFormComponent
+    MyFormComponent,
+    WelcomeShellComponent
   ],
   imports: [
     FormsModule,
@@ -45,6 +47,7 @@ import { RegisterModule } from './components/register/register.module';
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),
     ModalModule.forRoot(),
+    EffectsModule.forRoot([]),
     StoreModule.forRoot({}),
     StoreDevtoolsModule.instrument({
       name: 'APM Demo App Devtools',

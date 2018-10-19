@@ -77,5 +77,8 @@
             </tbody>
         </table>
     </div>
+</div>
 
+<div *ngIf="myErrorMessage$ | async as myErrorMessage" class="alert alert-danger">
+    Error: {{ myErrorMessage }}
 </div>

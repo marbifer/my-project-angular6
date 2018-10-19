@@ -40,6 +40,8 @@
     </tbody>
   </table>
 
+</div>
 
-
+<div *ngIf="errorMessageDrop$ | async as errorMessageDrop" class="alert alert-danger">
+  Error: {{ errorMessageDrop }}
 </div>

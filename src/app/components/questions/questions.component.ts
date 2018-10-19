@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, Output, EventEmitter, ViewChild } from '@angular/core';
 import { QuestionsService } from '../../services/service.index';
 import { FormsModule, NgForm } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 
 /* Interfaces */
 import { ListQuestions } from '../../interfaces/questions.interface';
@@ -11,6 +11,7 @@ import { Dropdown } from '../../interfaces/dropdown.interface';
 import { select, Store } from '@ngrx/store';
 import * as fromWelcome from '../state/welcome.reducer';
 import * as welcomeActions from '../state/welcome.actions';
+import { takeWhile } from 'rxjs/operators';
 
 @Component({
   selector: 'app-questions',
@@ -23,7 +24,10 @@ export class QuestionsComponent implements OnInit, OnDestroy {
   private currentSelection: string;
   private showTable = false;
   public tableList: ListQuestions;
-  // private sub: Subscription;
+  private errorMessageDrop$: Observable<string>;
+  private componentActive = true;
+  // private subRef: Subscription;
+  // private subPay: Subscription;
 
   @ViewChild(NgForm) saveForm: NgForm;
 
@@ -34,18 +38,24 @@ export class QuestionsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
+    console.log('subscribe: ', this.componentActive);
+
     // Dropdown Questions
     // WITH STORE
-    this.store.pipe(select(fromWelcome.getShowDropQuestions)).subscribe(
-      showDataDropdown => {
-        console.log('Se subscribe para traer los items almacenados en subject para el Dropdown', showDataDropdown);
+    this.errorMessageDrop$ = this.store.pipe(select(fromWelcome.getErrorDrop));
+    this.store.dispatch(new welcomeActions.LoadDrop());
+    this.store.pipe(select(fromWelcome.getShowDropQuestions),
+      takeWhile(() => this.componentActive))
+      .subscribe(
+        showDataDropdown => {
+          console.log('Se subscribe para traer los items almacenados en subject para el Dropdown', showDataDropdown);
 
-        if (showDataDropdown !== null) { // Se verifica que el subject no este vacío.
-          // this.dataDropdown = showDataDropdown;
-          this.dropdownItems = showDataDropdown;
-          this.currentSelection = showDataDropdown.categories[0];
-        }
-      });
+          if (showDataDropdown !== null) { // Se verifica que el subject no este vacío.
+            // this.dataDropdown = showDataDropdown;
+            this.dropdownItems = showDataDropdown;
+            this.currentSelection = showDataDropdown.categories[0];
+          }
+        });
 
     this._questionsService.getQuestions().subscribe(res => {
       console.log('RESPONSE', res);
@@ -53,10 +63,11 @@ export class QuestionsComponent implements OnInit, OnDestroy {
     });
 
     // Table QUESTIONS
-    // TODO: Unsubscribe
     // Redux With selectors
-    this.store.pipe(select(fromWelcome.getShowListQuestions)).subscribe(
-      showListQuestions => this.tableList = showListQuestions);
+    this.store.pipe(select(fromWelcome.getShowListQuestions),
+      takeWhile(() => this.componentActive))
+      .subscribe(
+        showListQuestions => this.tableList = showListQuestions);
 
   }
 
@@ -86,7 +97,8 @@ export class QuestionsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    // this.sub.unsubscribe();
+    this.componentActive = false;
+    console.log('Unsubscribe de questions: ', this.componentActive);
   }
 
 

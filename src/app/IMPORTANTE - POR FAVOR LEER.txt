@@ -1,0 +1,2 @@
+La carpeta de "components" es donde están los componentes PRESENTACIONALES, los que no tienen lógica.
+Y dentro de la carpeta "containers" están los componentes INTELIGENTES, los que poseen lógica.

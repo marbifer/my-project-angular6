@@ -1,4 +1,5 @@
-// import { List } from '../../interfaces/list.interface';
+import { References } from '../../interfaces/references.interface';
+import { Dropdown } from '../../interfaces/dropdown.interface';
 
 /* NgRx */
 import { Action } from '@ngrx/store';
@@ -14,7 +15,14 @@ export enum SectionsActionTypes {
   InitializeCurrentReference = '[Reference] Initialize Current Reference', // Esta cadena es la misma que está en DevTools en el navegador.
   ClickSearchPayments = '[Payment] Click Search Payments',
   GetDataDropdown = '[Dropdown] Get Data Dropdown',
-  ClickSearchQuestions = '[Questions] Click Search Questions'
+  ClickSearchQuestions = '[Questions] Click Search Questions',
+  Load = '[DataRef] Load',
+  LoadSuccess = '[DataRef] Load Success',
+  LoadFail = '[DataRef] Load Fail',
+
+  LoadDrop = '[DataDrop] Load Drop',
+  LoadSuccessDrop = '[DataDrop] Load Drop Success',
+  LoadFailDrop = '[DataDrop] Load Drop Fail'
 }
 
 // Home => Form Reference
@@ -75,8 +83,47 @@ export class ClickSearchQuestions implements Action {
   constructor(public payload: MyModelMongoDataListQuestions) { }
 }
 
+export class Load implements Action {
+  readonly type = SectionsActionTypes.Load;
+}
+
+export class LoadSuccess implements Action {
+  readonly type = SectionsActionTypes.LoadSuccess;
+
+  constructor(
+    public payload: References) { }
+}
+
+export class LoadFail implements Action {
+  readonly type = SectionsActionTypes.LoadFail;
+
+  constructor(public payload: string) { }
+}
+
+export class LoadDrop implements Action {
+  readonly type = SectionsActionTypes.LoadDrop;
+}
+
+export class LoadSuccessDrop implements Action {
+  readonly type = SectionsActionTypes.LoadSuccessDrop;
+
+  constructor(public payload: Dropdown) { }
+}
+
+export class LoadFailDrop implements Action {
+  readonly type = SectionsActionTypes.LoadFailDrop;
+
+  constructor(public payload: string) { }
+}
+
 // Paso 3
 export type WelcomeActions = InitializeCurrentReference
   | ClickSearchPayments
   | GetDataDropdown
-  | ClickSearchQuestions;
+  | ClickSearchQuestions
+  | Load
+  | LoadSuccess
+  | LoadFail
+  | LoadDrop
+  | LoadSuccessDrop
+  | LoadFailDrop;
