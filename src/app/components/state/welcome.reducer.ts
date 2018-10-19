@@ -14,19 +14,20 @@ export interface WelcomeState {
     showListPayments: any;
     showDataDropdown: any;
     showListQuestions: any;
+    error: string;
 }
 
 const initialState: WelcomeState = {
     showReferences: null,
     showListPayments: '',
     showDataDropdown: null,
-    showListQuestions: ''
-    // error: ''
+    showListQuestions: '',
+    error: ''
 };
 
 // Selectors
-const getPaymentsFeatureState = createFeatureSelector<WelcomeState>('welcome');
 const getReferencesFeatureState = createFeatureSelector<WelcomeState>('welcome');
+const getPaymentsFeatureState = createFeatureSelector<WelcomeState>('welcome');
 const getQuestionsDropFeatureState = createFeatureSelector<WelcomeState>('welcome');
 const getQuestionsFeatureState = createFeatureSelector<WelcomeState>('welcome');
 
@@ -48,6 +49,16 @@ export const getShowDropQuestions = createSelector(
 export const getShowListQuestions = createSelector(
     getQuestionsFeatureState,
     state => state.showListQuestions
+);
+
+export const getError = createSelector(
+    getReferencesFeatureState,
+    state => state.error
+);
+
+export const getErrorDrop = createSelector(
+    getQuestionsDropFeatureState,
+    state => state.error
 );
 
 export function reducer(state = initialState, action: WelcomeActions): WelcomeState {
@@ -87,18 +98,40 @@ export function reducer(state = initialState, action: WelcomeActions): WelcomeSt
             };
 
 
-        /* case PaymentsActionTypes.InitializeCurrentReference:
-
+        case SectionsActionTypes.LoadSuccess:
             return {
                 ...state,
-                showReferences: {
-                    select: ['RT'],
-                    code: {
-                        code2: 28
-                    },
-                    currency: ['ARS']
-                }
-            }; */
+                showReferences: action.payload,
+                error: ''
+            };
+
+        case SectionsActionTypes.LoadFail:
+            return {
+                ...state,
+                showReferences: [],
+                error: action.payload
+            };
+
+        case SectionsActionTypes.LoadFailDrop:
+            return {
+                ...state,
+                showDataDropdown: action.payload,
+                error: ''
+            };
+
+        case SectionsActionTypes.LoadFailDrop:
+            return {
+                ...state,
+                showDataDropdown: [],
+                error: action.payload
+            };
+
+        case SectionsActionTypes.LoadFailDrop:
+            return {
+                ...state,
+                showDataDropdown: [],
+                error: action.payload
+            };
 
         default:
             return state;

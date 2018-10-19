@@ -1,4 +1,6 @@
-import { Component, ViewChild, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+
+
 import { ReferencesService } from '../../services/service.index';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Subscription, Observable } from 'rxjs';
@@ -9,78 +11,61 @@ import { List } from '../../interfaces/list.interface';
 
 /* NgRx */
 import { Store, select } from '@ngrx/store';
-import * as fromWelcome from '../state/welcome.reducer';
-import * as welcomeActions from '../state/welcome.actions';
-import { takeWhile } from 'rxjs/operators';
+import * as fromWelcome from '../../components/state/welcome.reducer';
+import * as welcomeActions from '../../components/state/welcome.actions';
 
 @Component({
-  selector: 'app-welcome',
-  templateUrl: './welcome.component.html',
-  styleUrls: ['./welcome.component.scss']
+  selector: 'app-welcome-shell',
+  templateUrl: './welcome-shell.component.html',
+  styleUrls: ['./welcome-shell.component.scss']
 })
-export class WelcomeComponent implements OnInit, OnDestroy {
+export class WelcomeShellComponent {
 
-  @ViewChild(NgForm) saveForm: NgForm;
-  /* @Input() myErrorMessage: string;
-   @Input() referencesCode: References;
-   @Input() tableList: List;
-   @Output() searchRef = new EventEmitter<any>();
-   @Output() addNum = new EventEmitter<any>();
-
-   searchReference(form: NgForm): void {
-     this.searchRef.emit(form);
-   }
-
-   addNumbers(): void {
-     this.addNum.emit();
-   } */
-
-  public referencesCode: References;
-  public fieldCode: number;
-  private currentSelection: string;
+  /* @ViewChild(NgForm) saveForm: NgForm;
   private addNumbersLength: number;
-  private errorMessage = false;
-  private myErrorMessage$: Observable<string>;
-
-  private currencySelection: string;
+  private showTable = false;
   private selectable = false;
+  private errorMessage = false;
+  private currencySelection: string;
+  private currentSelection: string;
+  public fieldCode: number;
 
+  /* public referencesCode: References;
+  public fieldCode: number;
+  private myErrorMessage$: Observable<string>;
   public tableList: List;
   private showTable = false;
-  private componentActive = true;
-  // private subRef: Subscription;
-  // private subPay: Subscription;
+  private subRef: Subscription;
+  private subPay: Subscription; */
 
-  constructor(
+  public referencesCode$: Observable<References>;
+  // public fieldCode$: Observable<number>;
+  // private currentSelection$: Observable<string>;
+  // private addNumbersLength$: Observable<number>;
+  // private errorMessage$: Observable<boolean>;
+  private myErrorMessage$: Observable<string>;
+
+  // private currencySelection$: Observable<string>;
+  // private selectable$: Observable<boolean>;
+
+  public tableList$: Observable<List>;
+  // private showTable$: Observable<boolean>;
+  // private subRef$: Observable<Subscription>;
+  // private subPay$: Observable<Subscription>;
+  // private componentActive = true;
+
+
+  /* constructor(
     public _referencesService: ReferencesService,
     private store: Store<fromWelcome.State>
   ) { }
 
   ngOnInit() {
 
-    console.log('subscribe: ', this.componentActive);
-
     this.currentSelection = '';
     this.currencySelection = '';
 
-    // First form REFERENCE
-    // WITH STORE
-    this.myErrorMessage$ = this.store.pipe(select(fromWelcome.getError));
     // this.store.dispatch(new welcomeActions.Load());
-    this.store.pipe(select(fromWelcome.getShowReferences),
-      takeWhile(() => this.componentActive))
-      .subscribe(
-        showReferences => {
-          console.log('Se subscribe para traer los items almacenados en subject para el Dropdown', showReferences);
-
-          if (showReferences !== null) { // Se verifica que el subject no este vacío.
-            console.log('reference', showReferences);
-            this.fieldCode = showReferences.code.code2;
-            this.referencesCode = showReferences;
-            this.currentSelection = showReferences.select[0];
-            this.currencySelection = showReferences.currency[0];
-          }
-        });
 
     // First form REFERENCE => dispatch WITH ACTIONS
     this._referencesService.getReferences().subscribe(res => {
@@ -88,12 +73,11 @@ export class WelcomeComponent implements OnInit, OnDestroy {
       this.store.dispatch(new welcomeActions.InitializeCurrentReference(res[0]));
     });
 
-    // Table PAYMENTS
-    // Redux With selectors
-    this.store.pipe(select(fromWelcome.getShowPayments),
-      takeWhile(() => this.componentActive))
-      .subscribe(
-        showListPayments => this.tableList = showListPayments);
+    // First form REFERENCE
+    // WITH STORE
+    this.myErrorMessage$ = this.store.pipe(select(fromWelcome.getError));
+    this.referencesCode$ = this.store.pipe(select(fromWelcome.getShowReferences));
+    this.tableList$ = this.store.pipe(select(fromWelcome.getShowPayments));
 
   }
 
@@ -142,9 +126,9 @@ export class WelcomeComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnDestroy(): void {
-    this.componentActive = false;
-    console.log('Unsubscribe de references: ', this.componentActive);
-  }
+  /* ngOnDestroy(): void {
+    this.subRef.unsubscribe();
+    this.subPay.unsubscribe();
+  } */
 
 }

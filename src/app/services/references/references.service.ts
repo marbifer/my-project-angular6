@@ -27,7 +27,11 @@ export class ReferencesService {
   // Consulta con mongo FIRST FORM REFERENCE:
   // WITH STORE
   getReferences() {
-    return this.http.get(this.URL_API);
+    return this.http.get(this.URL_API)
+      .pipe(
+        tap(data => console.log(JSON.stringify(data))),
+        catchError(this.handleError)
+      );
   }
 
   postPaymentsFilter(body) {
@@ -49,16 +53,5 @@ export class ReferencesService {
   private handleError(error: any): Promise<any> {
     console.error('An error occurred', error);
     return Promise.reject(error.message || error);
-  }
-
-  private initializeReference(): References {
-    // Return an initialized object
-    return {
-      select: [''],
-      code: {
-        code2: null
-      },
-      currency: ['']
-    };
   }
 }

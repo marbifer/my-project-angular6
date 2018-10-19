@@ -27,7 +27,11 @@ export class QuestionsService {
   // Consulta con mongo DROPDOWN QUESTIONS:
   // WITH STORE
   getQuestions() {
-    return this.http.get(this.URL_API_DROP);
+    return this.http.get(this.URL_API_DROP)
+      .pipe(
+        tap(data => console.log(JSON.stringify(data))),
+        catchError(this.handleError)
+      );
   }
 
   postQuestionsFilter(body) {
@@ -51,10 +55,4 @@ export class QuestionsService {
     return Promise.reject(error.message || error);
   }
 
-  private initializeDropdown(): Dropdown {
-    // Return an initialized object
-    return {
-      categories: ['']
-    };
-  }
 }
