@@ -24,13 +24,15 @@ import { ProfileModule } from './components/profile/profile.module';
 import { LoginModule } from './components/login/login.module';
 import { RegisterModule } from './components/register/register.module';
 import { EffectsModule } from '@ngrx/effects';
-import { WelcomeShellComponent } from './containers/welcome-shell/welcome-shell.component';
+import { PaymentsComponent } from './components/shared/payments/payments.component';
+import { ReferencesComponent } from './components/shared/references/references.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MyFormComponent,
-    WelcomeShellComponent
+    PaymentsComponent,
+    ReferencesComponent
   ],
   imports: [
     FormsModule,

@@ -4,8 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppRoutingModule } from '../../app.routes';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
-
-// import { SharedModule } from '../shared/shared.module';
+import { SharedModule } from '../shared/shared.module';
 
 import { QuestionsComponent } from '../../components/questions/questions.component';
 
@@ -23,7 +22,7 @@ import { reducer } from '../state/welcome.reducer';
     HttpClientModule,
     AppRoutingModule,
     BrowserModule,
-    // SharedModule,
+    SharedModule,
     // RouterModule.forChild(productRoutes),
     StoreModule.forFeature('welcome', reducer), // Redux: el segundo parármetro es un reductor.
     // EffectsModule.forFeature([ProductEffects]) // Redux: efectos.

@@ -4,8 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppRoutingModule } from '../../app.routes';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
-
-// import { SharedModule } from '../shared/shared.module';
+import { SharedModule } from '../shared/shared.module';
 
 import { ProfileComponent } from '../../components/profile/profile.component';
 
@@ -21,8 +20,8 @@ import { StoreModule } from '@ngrx/store';
     ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule,
-    BrowserModule
-    // SharedModule,
+    BrowserModule,
+    SharedModule,
     // RouterModule.forChild(productRoutes),
     // StoreModule.forFeature('products', reducer), // Redux: el segundo parármetro es un reductor.
     // EffectsModule.forFeature([ProductEffects]) // Redux: efectos.
