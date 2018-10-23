@@ -1,53 +1,40 @@
 import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
-/* import { ReferencesService } from '../../../services/service.index';
-import { FormsModule, NgForm } from '@angular/forms';
-import { Observable } from 'rxjs'; */
+import { ReferencesService } from '../../../services/service.index';
+import { NgForm } from '@angular/forms';
+import { Observable } from 'rxjs';
 
 /* Interfaces */
-/* import { References } from '../../../interfaces/references.interface';
-import { List } from '../../../interfaces/list.interface'; */
+import { References } from '../../../interfaces/references.interface';
+import { List } from '../../../interfaces/list.interface';
 
 /* NgRx */
-/* import { Store, select } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import * as fromWelcome from '../../state/welcome.reducer';
 import * as welcomeActions from '../../state/welcome.actions';
-import { takeWhile } from 'rxjs/operators'; */
+import { takeWhile } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-welcome',
-  templateUrl: './welcome.component.html',
-  styleUrls: ['./welcome.component.scss']
+  selector: 'app-smart-component',
+  templateUrl: './smart.component.html',
+  styleUrls: ['./smart.component.scss']
 })
-export class WelcomeComponent {
+export class SmartComponent implements OnInit, OnDestroy {
 
-  // @ViewChild(NgForm) saveForm: NgForm;
-  /* @Input() myErrorMessage: string;
-   @Input() referencesCode: References;
-   @Input() tableList: List;
-   @Output() searchRef = new EventEmitter<any>();
-   @Output() addNum = new EventEmitter<any>();
+  @ViewChild(NgForm) saveForm: NgForm;
 
-   searchReference(form: NgForm): void {
-     this.searchRef.emit(form);
-   }
-
-   addNumbers(): void {
-     this.addNum.emit();
-   } */
-
-  /* public referencesCode: References;
+  public referencesCode: References;
   public fieldCode: number;
-  private currentSelection: string;
+  public currentSelection: string;
   private addNumbersLength: number;
-  private errorMessage = false;
-  private myErrorMessage$: Observable<string>;
+  public myErrorMessage$: Observable<string>;
 
-  private currencySelection: string;
-  private selectable = false;
+  public currencySelection: string;
+  public selectable = false;
+  public errorMessage = false;
   private componentActive = true;
 
   public tableList: List;
-  private showTable = false;
+  public showTable = false;
 
   constructor(
     public _referencesService: ReferencesService,
@@ -65,6 +52,7 @@ export class WelcomeComponent {
     // WITH STORE
     this.myErrorMessage$ = this.store.pipe(select(fromWelcome.getError));
     // this.store.dispatch(new welcomeActions.Load());
+
     this.store.pipe(select(fromWelcome.getShowReferences),
       takeWhile(() => this.componentActive))
       .subscribe(
@@ -95,41 +83,33 @@ export class WelcomeComponent {
 
   }
 
-  searchReference(form: NgForm) {
-    console.log('SEARCH', form.value);
-    const selectedRef = this.currentSelection;
-    const selectedCurrency = this.currencySelection;
-
+  onSearchReference(formValue) {
     const body = {
-      ref: selectedRef,
-      currency: selectedCurrency
+      ref: formValue.reference,
+      currency: formValue.currency
     };
+
+    console.log('body', body);
 
     // With Actions
     this._referencesService.postPaymentsFilter(body).subscribe(res => {
       this.store.dispatch(new welcomeActions.ClickSearchPayments(res[0])); // La respuesta se va a almacenar en el Store.
     });
 
-    if (!selectedRef && !selectedCurrency && this.addNumbersLength > 9) {
+    if (!formValue.reference && !formValue.currency && formValue.number1.length > 9) {
       this.showTable = false;
     } else {
       this.showTable = true;
     }
   }
 
-  mostrarSeleccionAntesDeAgregar() {
-    console.log('Lo seleccionado actualmente en el input de referencia: ', this.currentSelection);
-    console.log('Lo seleccionado actualmente en el input de Currency: ', this.currencySelection);
-  }
-
-  addNumbers() {
-    const numbers = this.saveForm.controls['number1'].value;
+  onAddNumbers(formValue) {
+    const numbers = formValue.number1;
     console.log('numbers: ', numbers);
     this.addNumbersLength = numbers.length;
     console.log('characters: ', this.addNumbersLength);
     if (this.addNumbersLength === 9) {
       this.selectable = true;
-      // this.showTable = true;
       this.errorMessage = false;
     } else {
       if (this.addNumbersLength > 9) {
@@ -143,6 +123,5 @@ export class WelcomeComponent {
   ngOnDestroy(): void {
     this.componentActive = false;
     console.log('Unsubscribe de references: ', this.componentActive);
-  } */
-
+  }
 }

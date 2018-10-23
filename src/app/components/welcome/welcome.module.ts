@@ -7,13 +7,15 @@ import { FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 
 import { WelcomeComponent } from '../../components/welcome/welcome.component';
+import { PaymentsComponent } from '../../components/welcome/shared/payments/payments.component';
+import { ReferencesComponent } from '../../components/welcome/shared/references/references.component';
+import { SmartComponent } from './smart-component/smart.component';
 
 /* NgRx */
 import { StoreModule } from '@ngrx/store';
 import { reducer } from '../state/welcome.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { WelcomeEffects } from '../state/welcome.effects';
-import { SmartComponentComponent } from './smart-component/smart-component.component';
 
 @NgModule({
   imports: [
@@ -28,7 +30,13 @@ import { SmartComponentComponent } from './smart-component/smart-component.compo
   ],
   declarations: [
     WelcomeComponent,
-    SmartComponentComponent
+    SmartComponent,
+    // ReferencesShellComponent,
+    // PaymentsShellComponent,
+    ReferencesComponent,
+    PaymentsComponent
   ]
 })
 export class WelcomeModule { }
+
+

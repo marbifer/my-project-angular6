@@ -1,0 +1,7 @@
+<div>
+  <app-references [fieldCode]="fieldCode" [referencesCode]="referencesCode" [selectable]="selectable" [errorMessage]="errorMessage"
+    [addNumbersLength]="addNumbersLength" [currentSelection]="currentSelection" [currencySelection]="currencySelection"
+    (searchRef)="onSearchReference($event)" (addNumber)="onAddNumbers($event)">
+  </app-references><br>
+  <app-payments [showTable]="showTable" [tableList]="tableList"></app-payments>
+</div>
