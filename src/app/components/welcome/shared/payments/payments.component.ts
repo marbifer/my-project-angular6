@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { List } from 'src/app/interfaces/list.interface';
 
 @Component({
   selector: 'app-payments',
@@ -7,9 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PaymentsComponent implements OnInit {
 
+  @Input() showTable: boolean;
+  @Input() tableList: List;
+
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
 }

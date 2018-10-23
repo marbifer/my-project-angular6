@@ -24,10 +24,8 @@ export class QuestionsComponent implements OnInit, OnDestroy {
   private currentSelection: string;
   private showTable = false;
   public tableList: ListQuestions;
-  private errorMessageDrop$: Observable<string>;
+  public errorMessageDrop$: Observable<string>;
   private componentActive = true;
-  // private subRef: Subscription;
-  // private subPay: Subscription;
 
   @ViewChild(NgForm) saveForm: NgForm;
 
